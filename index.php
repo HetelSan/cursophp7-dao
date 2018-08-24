@@ -35,13 +35,29 @@ require_once("config.php");
 // Cria um novo usuário (com o método mágico __construct na classe Usuarios)
 // necessário alterar a instanciação da classe Usuarios já passando o login e password
 $aluno = new Usuario("aluno", "@1un0");
+
 $aluno->insert();
+
 echo $aluno;
 */
-
+/*
 // Alterando um usuário
 $usuario = new Usuario();
+
 $usuario->loadById(12);
+
 $usuario->update("professor", "!@#$%¨&*");
+
 echo $usuario;
+*/
+
+// Excluindo um usuário
+$usuario = new Usuario();
+
+$usuario->loadById(8);
+
+$usuario->delete();
+
+echo $usuario;
+
 ?>
