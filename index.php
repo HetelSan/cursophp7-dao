@@ -20,9 +20,21 @@ require_once("config.php");
 // echo json_encode($search);
 
 // Carrega um usuário usando o login e a senha 
-$usuario = new Usuario();
-$usuario->login("root", "!@#$");
+// $usuario = new Usuario();
+// $usuario->login("root", "!@#$");
+// echo $usuario;
 
-echo $usuario;
+// Cria um novo usuário (sem o método mágico __constructor na classe Usuarios)
+// $aluno = new Usuario();
+// $aluno->setDeslogin("aluno");
+// $aluno->setDessenha("$#@!");
+// $aluno->insert();
+// echo $aluno;
+
+// Cria um novo usuário (com o método mágico __construct na classe Usuarios)
+// necessário alterar a instanciação da classe Usuarios já passando o login e password
+$aluno = new Usuario("aluno", "@1un0");
+$aluno->insert();
+echo $aluno;
 
 ?>
