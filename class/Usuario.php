@@ -48,7 +48,6 @@ class Usuario {
     }
     
     public function __toString() {
-        
         return json_encode(array(
             "idusuario" => $this->getIdusuario(),
             "deslogin" => $this->getDeslogin(),
@@ -58,7 +57,6 @@ class Usuario {
     }
 
     public function loadById($id) {
-        
         $sql = new Sql();
         
         $results = $sql->select("SELECT * FROM tb_usuarios WHERE idusuario = :ID", array(
@@ -71,14 +69,12 @@ class Usuario {
     }
     
     public static function getList() {  // método static não precisa ser instanciado. Basta chamar direto(ver index.php)
-
         $sql = new Sql();
 
         return $sql->select("SELECT * FROM tb_usuarios ORDER BY deslogin, idusuario;");
     }
     
     public static function search($login) {
-
         $sql = new Sql();
         
         return $sql->select("SELECT * FROM tb_usuarios WHERE deslogin LIKE :SEARCH ORDER BY deslogin", array(
@@ -87,7 +83,6 @@ class Usuario {
     }
     
     public function login ($login, $password) {
-        
         $sql = new Sql();
         
         $results = $sql->select("SELECT * FROM tb_usuarios WHERE deslogin = :LOGIN AND dessenha = :PASSWORD;", array(
@@ -103,16 +98,13 @@ class Usuario {
     }
     
     public function setData($data) {
-        
         $this->setIdusuario($data['idusuario']);
         $this->setDeslogin($data['deslogin']);
         $this->setDessenha($data['dessenha']);
         $this->setDtcadastro(new DateTime($data['dtcadastro']));
-    
     }
 
     public function insert() {
-
         $sql = new Sql();
 
         $results = $sql->select("CALL sp_usuarios_insert(:LOGIN, :PASSWORD)", array(
@@ -123,6 +115,20 @@ class Usuario {
         if (count($results) > 0 ) {
             $this->setData($results[0]);
         }
+    }
+
+    public function update($login, $password) {
+
+        $this->setDeslogin($login);
+        $this->setDessenha($password);
+        
+        $sql = new Sql();
+
+        $sql->query("UPDATE tb_usuarios SET deslogin = :LOGIN, dessenha = :PASSWORD WHERE idusuario = :ID", array(
+            ':LOGIN' => $this->getDeslogin(),
+            ':PASSWORD' => $this->getDessenha(),
+            ':ID' => $this->getIdusuario()
+        ));
     }
 
 }
